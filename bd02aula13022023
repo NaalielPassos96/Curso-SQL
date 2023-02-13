@@ -1,0 +1,37 @@
+CREATE SCHEMA IF NOT EXISTS mydb;
+USE mydb ;
+
+CREATE TABLE IF NOT EXISTS estado (
+  idestado INT NOT NULL,
+  estado CHAR(2) NOT NULL,
+  PRIMARY KEY (idestado)
+);
+
+CREATE TABLE IF NOT EXISTS cidadeNasc (
+  idcidade INT NOT NULL,
+  cidade VARCHAR(45) NOT NULL,
+  estado_idestado INT NOT NULL,
+  PRIMARY KEY (idcidade),
+  CONSTRAINT fk_cidade_estado
+    FOREIGN KEY (estado_idestado)
+    REFERENCES estado (idestado)
+);
+
+
+CREATE TABLE IF NOT EXISTS pessoa (
+  idpessoa INT NOT NULL,
+  nome VARCHAR(45) NOT NULL,
+  data_nasc VARCHAR(45) NULL,
+  disciplina_favorita VARCHAR(45) NOT NULL,
+  cidade_idcidade INT NOT NULL,
+  PRIMARY KEY (idpessoa),
+  CONSTRAINT fk_pessoa_cidade1
+	FOREIGN KEY (cidade_idcidade)
+    REFERENCES cidadeNasc (idcidade)
+);
+
+INSERT INTO estado(idestado,estado) VALUE(1,'PR');
+INSERT INTO cidadeNasc(idcidade,cidade,estado_idestado) VALUE(1,'PARANAVAÍ',1);
+INSERT INTO pessoa (idpessoa,nome,data_nasc,disciplina_favorita,cidade_idcidade) VALUE(1,'NAALIEL N. PASSOS','06-11-1996','Engenharia de Software',1);
+
+SELECT * FROM pessoa;
